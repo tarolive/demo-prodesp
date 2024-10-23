@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods = ['POST'])
-def app() -> list:
+def my_app() -> list:
 
     if len(request.files) == 0:
         return {
