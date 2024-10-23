@@ -1,6 +1,7 @@
 from components.nlp              import nlp
 from components.process_document import get_subject_text, process_document
 from flask                       import Flask, request
+from os.path                     import join
 
 app = Flask(__name__)
 
@@ -8,21 +9,22 @@ app = Flask(__name__)
 @app.route('/', methods = ['POST'])
 def app() -> list:
 
-    if 'file' not in request.files:
+    if len(request.files) == 0:
         return {
             'error' : 'File not found'
         }
 
-    file = request.files['file']
+    file = request.files[0]
 
     if file.filename == '':
         return {
-            'error' : 'File not selected'
+            'error' : 'File must have a name'
         }
 
-    file.save(file.filename)
+    filename = join('uploads', file.filename)
+    file.save(filename)
 
-    text     = process_document(file.filename)
+    text     = process_document(filename)
     subjects = []
 
     for page in text:
