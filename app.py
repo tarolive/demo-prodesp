@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods = ['POST'])
-def process_document() -> list:
+def app() -> list:
 
     if 'file' not in request.files:
         return {
@@ -34,4 +34,22 @@ def process_document() -> list:
 
             subjects.append(subject)
 
-    return subjects
+    result = {
+        'exoneração' : [],
+        'nomeação'   : []
+    }
+
+    for subject in subjects:
+
+        if subject['type'] == 'exoneração':
+
+            result['exoneração'] += subject['pessoas']
+
+        else:
+
+            result['nomeração'] += subject['pessoas']
+
+    result['exoneração'] = list(set(result['exoneração']))
+    result['nomeação'] = list(set(result['nomeação']))
+
+    return result
