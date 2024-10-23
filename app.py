@@ -9,12 +9,12 @@ app = Flask(__name__)
 @app.route('/', methods = ['POST'])
 def my_app() -> list:
 
-    if len(request.files) == 0:
+    if 'file' not in request.files:
         return {
             'error' : 'File not found'
         }
 
-    file = request.files[0]
+    file = request.files['file']
 
     if file.filename == '':
         return {
