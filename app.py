@@ -45,11 +45,11 @@ def my_app() -> list:
 
         if subject['type'] == 'exoneração':
 
-            result['exoneração'] += subject['pessoas']
+            result['exoneração'] += subject['nlp']['pessoas']
 
         else:
 
-            result['nomeração'] += subject['pessoas']
+            result['nomeação'] += subject['nlp']['pessoas']
 
     result['exoneração'] = list(set(result['exoneração']))
     result['nomeação'] = list(set(result['nomeação']))
